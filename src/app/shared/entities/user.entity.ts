@@ -26,7 +26,7 @@ export class UserEntity {
     username: string;
 
     @Column()
-    senha: number;
+    senha: string;
 
     @Column()
     tipo: string;
