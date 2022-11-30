@@ -6,6 +6,8 @@ export class RecrutadorController {
         try {
             const { nome, username, senha, empresa } = req.body;
 
+            // .. validações dos campos
+
             const usecase = new CreateRecrutadorUseCase();
             const result = await usecase.execute({
                 nome,
@@ -26,4 +28,8 @@ export class RecrutadorController {
             });
         }
     }
+
+    public list() {}
+
+    public update() {}
 }

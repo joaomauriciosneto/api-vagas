@@ -21,7 +21,7 @@ export class UserRepository {
         return this.mapEntityToModel(result);
     }
 
-    public async findByUsernamePassword(username: string, senha: string) {
+    public async findByUsernamePassword(username: string, senha?: string) {
         const result = await this.repository.findOneBy({
             username,
             senha,
