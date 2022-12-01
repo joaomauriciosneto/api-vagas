@@ -54,4 +54,14 @@ export class UserRepository {
             return this.mapEntityToModel(item);
         })
     }
+
+    public async get(id: string) {
+        const result = await this.repository.findOneBy({id});
+
+        if(!result) {
+            return null
+        }
+
+        return this.mapEntityToModel(result);
+    }
 }
