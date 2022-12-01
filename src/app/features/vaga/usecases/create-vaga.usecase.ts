@@ -1,5 +1,6 @@
 import { UserRepository } from "../../user/repositories/user.repository";
 import { VagaModel } from '../../../models/vaga.model'
+import { VagaRepository } from "../repositories/vaga.repository";
 
 interface CreateVagaDTO {
   descricao: string;
@@ -13,9 +14,9 @@ interface CreateVagaDTO {
 export class CreateVagaUseCase {
   public async execute(data: CreateVagaDTO) {
     const usuarioRepository = new UserRepository();
-    const result = await usuarioRepository.get(data.idRecrutador);
+    const usuarioResult = await usuarioRepository.get(data.idRecrutador);
 
-    if(!result) {
+    if(!usuarioResult) {
       return null
     }
 
@@ -24,10 +25,14 @@ export class CreateVagaUseCase {
       data.empresa,
       data.dtLimite,
       data.indAtivo,
-      result,
+      usuarioResult,
       data.maxCandidatos
     )
 
+    const repository = new VagaRepository();
+    const result = await repository.create(vaga);
+
+    return result.toJson();
     
   }
 }
