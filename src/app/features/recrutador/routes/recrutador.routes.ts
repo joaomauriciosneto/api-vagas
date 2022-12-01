@@ -25,5 +25,10 @@ export const recrutadorRoutes = () => {
         }
     );
 
+    router.get(
+        "/",
+        new RecrutadorController().list
+    );
+
     return router;
 };

@@ -46,4 +46,12 @@ export class UserRepository {
 
         return user;
     }
+
+    public async find(){
+        const result = await this.repository.find()
+
+        return result.map(item => {
+            return this.mapEntityToModel(item);
+        })
+    }
 }
