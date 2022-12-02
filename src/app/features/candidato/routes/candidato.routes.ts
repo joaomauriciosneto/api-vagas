@@ -7,5 +7,7 @@ export const candidatoRoutes = () => {
 
   router.post("/", [createCandidatoValidator],new CandidatoController().create);
 
+  router.get('/', new CandidatoController().list);
+
   return router;
 };
