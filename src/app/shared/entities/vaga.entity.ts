@@ -44,7 +44,9 @@ export class VagaEntity {
     })
     update: Date;
 
-    @ManyToOne(() => UserEntity)
+    @ManyToOne(() => UserEntity, {
+        eager: true,
+    })
     @JoinColumn({
         name: "id_recrutador",
     })

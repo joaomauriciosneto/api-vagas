@@ -24,6 +24,11 @@ export const checkLoginRecrutadorMiddleware = (
             });
         }
 
+        req.body = {
+            ...req.body,
+            idRecrutador: user.id,
+        };
+
         return next();
     } catch (error: any) {
         return res.status(401).send({
