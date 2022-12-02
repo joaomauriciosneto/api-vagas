@@ -28,6 +28,23 @@ export class VagaRepository {
         return this.mapEntityToModel(createdVaga!);
     }
 
+    public async find(id: string) {
+        const result = await this.repository.findOne({
+            relations: {
+                candidaturas: true,
+            },
+            where: {
+                id,
+            },
+        });
+
+        if (!result) {
+            return null;
+        }
+
+        return this.mapEntityToModel(result);
+    }
+
     private mapEntityToModel(vagaEntity: VagaEntity) {
         const recrutador = UsuarioModel.create(
             vagaEntity.recrutador.id,
