@@ -33,7 +33,7 @@ export class CandidatoController {
         try {
 
             const usecase = new ListCandidatoUseCase();
-            const result = usecase.execute();
+            const result = await usecase.execute();
 
             return res.status(200).send({
                 ok: true,
