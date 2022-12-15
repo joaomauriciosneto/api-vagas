@@ -1,12 +1,22 @@
 import { UserRepository } from "../../user/repositories/user.repository";
 
 export class ListCandidatoUseCase {
+  readonly #repository: UserRepository;
+  // readonly #cacheRepository: CacheRepository;
+
+  constructor(
+    repository: UserRepository, 
+    // cacheRepository: CacheRepository,
+  ) {
+    this.#repository = repository;
+    // this.#cacheRepository = cacheRepository;
+  }
+
   public async execute() {
-    const repository = new UserRepository();
-    const result = await repository.find('C');
+    const result = await this.#repository.find('C');
 
     return result.map(item => {
       return item.toJson();
-    })
+    });
   }
 }
