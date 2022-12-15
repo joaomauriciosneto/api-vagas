@@ -1,5 +1,5 @@
+import { VagaModel } from "../../../models/vaga.model";
 import { UserRepository } from "../../user/repositories/user.repository";
-import { VagaModel } from '../../../models/vaga.model'
 import { VagaRepository } from "../repositories/vaga.repository";
 
 interface CreateVagaDTO {
@@ -12,12 +12,22 @@ interface CreateVagaDTO {
 }
 
 export class CreateVagaUseCase {
-  public async execute(data: CreateVagaDTO) {
-    const usuarioRepository = new UserRepository();
-    const usuarioResult = await usuarioRepository.get(data.idRecrutador);
+  readonly #userRepository: UserRepository;
+  readonly #vagaRepository: VagaRepository;
 
-    if(!usuarioResult) {
-      return null
+  constructor(
+    userRepository: UserRepository,
+    vagaRepository: VagaRepository,
+  ) {
+    this.#userRepository = userRepository;
+    this.#vagaRepository = vagaRepository;
+  }
+
+  public async execute(data: CreateVagaDTO) {
+    const usuarioResult = await this.#userRepository.get(data.idRecrutador);
+
+    if (!usuarioResult) {
+      return null;
     }
 
     const vaga = new VagaModel(
@@ -27,12 +37,10 @@ export class CreateVagaUseCase {
       data.indAtivo,
       usuarioResult,
       data.maxCandidatos
-    )
+    );
 
-    const repository = new VagaRepository();
-    const result = await repository.create(vaga);
+    const result = await this.#vagaRepository.create(vaga);
 
     return result.toJson();
-    
   }
 }
