@@ -1,36 +1,38 @@
 import { ListCandidatoUseCase } from '../../../../../src/app/features/candidato/usecases/list-candidato.usecase';
 import { UserRepository } from '../../../../../src/app/features/user/repositories/user.repository';
 import { UsuarioModel } from '../../../../../src/app/models/usuario.model';
+import { CacheRepository } from '../../../../../src/app/shared/repositories/cache.repository';
+import { CacheConnection } from '../../../../../src/main/database/cache.connection';
 import { DatabaseConnection } from '../../../../../src/main/database/typeorm.connection';
 
 interface SutTypes {
-  // cacheRepository: CacheRepository;
+  cacheRepository: CacheRepository;
   repository: UserRepository;
   sut: ListCandidatoUseCase;
 }
 
 const makeSut = (): SutTypes => {
-  // const cacheRepository = new CacheRepository();
+  const cacheRepository = new CacheRepository();
   const repository = new UserRepository();
   const sut = new ListCandidatoUseCase(
     repository,
-    // cacheRepository,
+    cacheRepository,
   );
 
-  return { sut, repository };
+  return {sut, repository, cacheRepository}
 }
 
 describe('ListCandidatoUseCase -', () => {
   beforeAll(async () => {
     await DatabaseConnection.connect();
-    // await CacheConnection.connect();
+    await CacheConnection.connect();
   });
 
   afterEach(() => jest.clearAllMocks());
 
   afterAll(async () => {
     await DatabaseConnection.connection.destroy();
-    // await CacheConnection.connection.quit();
+    await CacheConnection.connection.quit();
   });
 
   test('deve chamar o método find do UserRepository com os valores corretos', async () => {

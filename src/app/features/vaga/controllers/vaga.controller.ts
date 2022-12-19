@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { UserRepository } from "../../user/repositories/user.repository";
+import { VagaRepository } from "../repositories/vaga.repository";
 import { AplicarVagaUseCase } from "../usecases/aplicar-vaga.usecase";
 import { CreateVagaUseCase } from "../usecases/create-vaga.usecase";
 
@@ -14,7 +16,10 @@ export class VagaController {
                 idRecrutador,
             } = req.body;
 
-            const usecase = new CreateVagaUseCase();
+            const usecase = new CreateVagaUseCase(
+                new UserRepository(),
+                new VagaRepository()
+            );
             const result = await usecase.execute({
                 descricao,
                 empresa,
