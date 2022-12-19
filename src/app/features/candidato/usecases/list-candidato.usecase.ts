@@ -1,15 +1,16 @@
+import { CacheRepository } from "../../../shared/repositories/cache.repository";
 import { UserRepository } from "../../user/repositories/user.repository";
 
 export class ListCandidatoUseCase {
   readonly #repository: UserRepository;
-  // readonly #cacheRepository: CacheRepository;
+  readonly #cacheRepository: CacheRepository;
 
   constructor(
     repository: UserRepository, 
-    // cacheRepository: CacheRepository,
+    cacheRepository: CacheRepository,
   ) {
     this.#repository = repository;
-    // this.#cacheRepository = cacheRepository;
+    this.#cacheRepository = cacheRepository;
   }
 
   public async execute() {
