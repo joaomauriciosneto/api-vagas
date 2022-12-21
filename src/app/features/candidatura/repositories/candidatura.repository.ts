@@ -26,6 +26,16 @@ export class CandidaturaRepository {
         return this.mapEntityToModel(result!);
     }
 
+    public async list() {
+        const result = await this.repository.find();
+
+        const candidatos = result.map(item => {
+            return this.mapEntityToModel(item)
+        })
+
+        return candidatos;
+    }
+
     public async get(idCandidato: string, idVaga: string) {
         const result = await this.repository.findOneBy({
             idCandidato,

@@ -67,4 +67,13 @@ export class VagaRepository {
 
         return vaga;
     }
+
+    public async list() {
+       const result = await this.repository.find();
+       const vagas = result.map(item => {
+        return this.mapEntityToModel(item)
+       })
+
+       return vagas;
+    }
 }
